@@ -1,98 +1,129 @@
 import requests
 import socket
 import json
+import sys
+import urllib3
 
+# Suppress insecure request warnings for HTTPS probing
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+print(r"""
+    ____                           ____                             
+   / __ \___  _{\___  ___  ____   / __/___  ____  __________  _____
+  / /_/ / _ \/ ___/ __ \/ __ \  \__ \/ _ \/ __ \/ ___/ __ \/ ___/
+ / _, _/  __/ /__/ /_/ / / / / ___/ /  __/ / / (__  ) /_/ / /    
+/_/ |_|\___/\___/\____/_/ /_/ /____/\___/_/ /_/____/\____/_/     
+""")
+
+# ==========================================
+# PHASE 1: PASSIVE RECON (crt.sh)
+# ==========================================
 def gather_subdomains(domain):
-    """Phase 1: Passively queries certificate logs for subdomains."""
-    print(f"[*] Agent initiating passive recon on: {domain}")
+    print(f"[*] Querying crt.sh for subdomains of: {domain}")
     url = f"https://crt.sh/?q=%25.{domain}&output=json"
+    subdomains = set()
     
     try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(url, headers=headers, timeout=45)
-        response.raise_for_status() 
+        # We use a User-Agent to prevent crt.sh from blocking the script
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+        response = requests.get(url, headers=headers, timeout=15)
         
-        subdomains = set()
-        data = response.json()
-        
-        for entry in data:
-            name = entry['name_value']
-            if '\n' in name:
-                for n in name.split('\n'):
-                    subdomains.add(n.strip().lower())
-            else:
-                subdomains.add(name.strip().lower())
-                
-        clean_subdomains = [sub for sub in subdomains if not sub.startswith('*')]
-        return sorted(clean_subdomains)
-        
+        if response.status_code == 200:
+            data = response.json()
+            for entry in data:
+                name_value = entry['name_value']
+                # Sometimes crt.sh returns multiple domains separated by newlines
+                for sub in name_value.split('\n'):
+                    # Ignore wildcard domains like *.example.com
+                    if not sub.startswith("*."):
+                        subdomains.add(sub.strip().lower())
+        else:
+            print(f"[-] crt.sh returned status code: {response.status_code}")
     except Exception as e:
-        print(f"[-] Agent encountered an error during passive recon: {e}")
-        return []
+        print(f"[-] Error querying crt.sh: {e}")
+        
+    return list(subdomains)
 
+# ==========================================
+# PHASE 2: ACTIVE VERIFICATION (DNS Resolution)
+# ==========================================
 def check_alive(subdomains):
-    """Phase 2: Actively checks if the found subdomains resolve to an IP."""
-    print("\n[*] Agent initiating active DNS resolution...")
-    alive_targets = {}
-    
+    alive = {}
     for sub in subdomains:
         try:
+            # If the domain resolves to an IP, it's alive
             ip = socket.gethostbyname(sub)
-            alive_targets[sub] = ip
-            print(f"[+] ALIVE: {sub} -> {ip}")
+            alive[sub] = {"ip": ip}
         except socket.gaierror:
+            # If it fails to resolve, it's a dead DNS record
             pass
             
-    return alive_targets
+    return alive
 
-def probe_web_services(alive_targets):
-    """Phase 3: Checks for active web servers and saves data for the AI."""
+# ==========================================
+# PHASE 3: WEB PROBING (HTTP/HTTPS)
+# ==========================================
+def probe_web_services(alive_subdomains):
     print("\n[*] Agent initiating HTTP/HTTPS web probing...")
-    results = {}
     
-    for sub, ip in alive_targets.items():
-        target_info = {"ip": ip, "http": "No Response", "https": "No Response"}
+    for sub in alive_subdomains:
+        http_status = "No Response"
+        https_status = "No Response"
         
-        # 1. Test standard HTTP (Port 80)
+        # Check HTTP (Port 80)
         try:
-            r = requests.get(f"http://{sub}", timeout=3)
-            target_info["http"] = r.status_code
-        except requests.exceptions.RequestException:
-            pass 
-            
-        # 2. Test secure HTTPS (Port 443)
-        try:
-            r_secure = requests.get(f"https://{sub}", timeout=3)
-            target_info["https"] = r_secure.status_code
+            r_http = requests.get(f"http://{sub}", timeout=3)
+            http_status = r_http.status_code
         except requests.exceptions.RequestException:
             pass
             
-        print(f"[+] PROBED: {sub} -> HTTP: {target_info['http']} | HTTPS: {target_info['https']}")
-        results[sub] = target_info
+        # Check HTTPS (Port 443) - verify=False ignores bad SSL certificates
+        try:
+            r_https = requests.get(f"https://{sub}", timeout=3, verify=False)
+            https_status = r_https.status_code
+        except requests.exceptions.RequestException:
+            pass
+            
+        # Store results in the dictionary
+        alive_subdomains[sub]["http"] = http_status
+        alive_subdomains[sub]["https"] = https_status
         
-    # 3. Save the brain's memory to a JSON file
-    with open("recon_data.json", "w") as f:
-        json.dump(results, f, indent=4)
+        print(f"[+] PROBED: {sub} -> HTTP: {http_status} | HTTPS: {https_status}")
         
+    # Save the final structured data to JSON
     print("\n[+] Agent memory saved to recon_data.json")
-    return results
+    with open("recon_data.json", "w") as f:
+        json.dump(alive_subdomains, f, indent=4)
+        
+    return alive_subdomains
 
 # ==========================================
 # EXECUTION BLOCK
 # ==========================================
 if __name__ == "__main__":
-    target_domain = "cuk.ac.ke" 
+    # 1. Check if the user provided a domain in the terminal
+    if len(sys.argv) < 2:
+        print("[-] Error: Missing target domain.")
+        print("[*] Usage: python recon_sensor.py <target_domain>")
+        sys.exit(1)
+        
+    # 2. Grab the domain from the terminal command
+    target_domain = sys.argv[1]
     
+    # 3. Run Phase 1
     discovered = gather_subdomains(target_domain)
     
     if discovered:
         print(f"\n[*] Found {len(discovered)} total subdomains. Filtering the noise...")
-        alive_subdomains = check_alive(discovered)
         
+        # Run Phase 2
+        alive_subdomains = check_alive(discovered)
         print(f"\n[+] Agent confirmed {len(alive_subdomains)} alive targets ready for further analysis.")
         
-        # Run the web probe and save the data
-        final_data = probe_web_services(alive_subdomains)
-        
+        # 4. Run Phase 3
+        if alive_subdomains:
+            probe_web_services(alive_subdomains)
+        else:
+            print("[-] No alive subdomains found to probe.")
     else:
         print("\n[-] No subdomains found to process.")

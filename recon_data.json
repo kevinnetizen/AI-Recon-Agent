@@ -1,117 +1,47 @@
 {
-    "conference.cuk.ac.ke": {
-        "ip": "197.136.53.86",
-        "http": "No Response",
-        "https": "No Response"
+    "support.hackerone.com": {
+        "ip": "162.159.140.147",
+        "http": 200,
+        "https": 200
     },
-    "cuk.ac.ke": {
-        "ip": "41.204.161.153",
-        "http": "No Response",
-        "https": "No Response"
-    },
-    "cukjail.cuk.ac.ke": {
-        "ip": "197.136.53.152",
+    "mta-sts.hackerone.com": {
+        "ip": "185.199.109.153",
         "http": 404,
-        "https": "No Response"
+        "https": 404
     },
-    "elearning.cuk.ac.ke": {
-        "ip": "197.136.53.31",
-        "http": 200,
-        "https": 200
-    },
-    "emasomo.cuk.ac.ke": {
-        "ip": "197.136.53.28",
-        "http": 200,
-        "https": 200
-    },
-    "ethics.cuk.ac.ke": {
-        "ip": "197.136.53.168",
-        "http": 200,
-        "https": "No Response"
-    },
-    "events.cuk.ac.ke": {
-        "ip": "197.136.53.150",
-        "http": "No Response",
-        "https": "No Response"
-    },
-    "hub.cuk.ac.ke": {
-        "ip": "41.204.161.153",
-        "http": "No Response",
-        "https": "No Response"
-    },
-    "icd.cuk.ac.ke": {
-        "ip": "197.136.53.65",
-        "http": 200,
-        "https": 200
-    },
-    "journals.cuk.ac.ke": {
-        "ip": "197.136.53.61",
-        "http": "No Response",
-        "https": 200
-    },
-    "krtcdp.cuk.ac.ke": {
-        "ip": "197.136.53.236",
+    "mta-sts.forwarding.hackerone.com": {
+        "ip": "185.199.110.153",
         "http": 404,
-        "https": "No Response"
+        "https": 404
     },
-    "lfc.cuk.ac.ke": {
-        "ip": "197.136.53.60",
-        "http": "No Response",
-        "https": "No Response"
+    "gslink.hackerone.com": {
+        "ip": "3.164.195.57",
+        "http": 404,
+        "https": 404
     },
-    "opac.cuk.ac.ke": {
-        "ip": "197.136.53.154",
-        "http": "No Response",
-        "https": "No Response"
-    },
-    "repository.cuk.ac.ke": {
-        "ip": "197.136.53.38",
+    "hackerone.com": {
+        "ip": "172.64.151.42",
         "http": 200,
         "https": 200
     },
-    "shahada1.cuk.ac.ke": {
-        "ip": "197.136.53.71",
-        "http": "No Response",
-        "https": "No Response"
-    },
-    "shahada2.cuk.ac.ke": {
-        "ip": "197.136.53.72",
+    "www.hackerone.com": {
+        "ip": "104.18.36.214",
         "http": 200,
         "https": 200
     },
-    "space.cuk.ac.ke": {
-        "ip": "197.136.53.138",
-        "http": "No Response",
-        "https": "No Response"
-    },
-    "staffportal.cuk.ac.ke": {
-        "ip": "197.136.53.12",
+    "docs.hackerone.com": {
+        "ip": "104.18.36.214",
         "http": 200,
         "https": 200
     },
-    "studentportal.cuk.ac.ke": {
-        "ip": "197.136.53.22",
+    "api.hackerone.com": {
+        "ip": "172.64.151.42",
         "http": 200,
         "https": 200
     },
-    "support.cuk.ac.ke": {
-        "ip": "197.136.53.94",
-        "http": 200,
-        "https": "No Response"
-    },
-    "survey.cuk.ac.ke": {
-        "ip": "197.136.53.53",
-        "http": "No Response",
-        "https": "No Response"
-    },
-    "ujumbe.cuk.ac.ke": {
-        "ip": "197.136.53.48",
-        "http": 200,
-        "https": 200
-    },
-    "www.cuk.ac.ke": {
-        "ip": "41.204.161.153",
-        "http": "No Response",
-        "https": "No Response"
+    "mta-sts.managed.hackerone.com": {
+        "ip": "185.199.111.153",
+        "http": 404,
+        "https": 404
     }
 }
