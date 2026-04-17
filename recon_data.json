@@ -1,0 +1,117 @@
+{
+    "conference.cuk.ac.ke": {
+        "ip": "197.136.53.86",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "cuk.ac.ke": {
+        "ip": "41.204.161.153",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "cukjail.cuk.ac.ke": {
+        "ip": "197.136.53.152",
+        "http": 404,
+        "https": "No Response"
+    },
+    "elearning.cuk.ac.ke": {
+        "ip": "197.136.53.31",
+        "http": 200,
+        "https": 200
+    },
+    "emasomo.cuk.ac.ke": {
+        "ip": "197.136.53.28",
+        "http": 200,
+        "https": 200
+    },
+    "ethics.cuk.ac.ke": {
+        "ip": "197.136.53.168",
+        "http": 200,
+        "https": "No Response"
+    },
+    "events.cuk.ac.ke": {
+        "ip": "197.136.53.150",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "hub.cuk.ac.ke": {
+        "ip": "41.204.161.153",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "icd.cuk.ac.ke": {
+        "ip": "197.136.53.65",
+        "http": 200,
+        "https": 200
+    },
+    "journals.cuk.ac.ke": {
+        "ip": "197.136.53.61",
+        "http": "No Response",
+        "https": 200
+    },
+    "krtcdp.cuk.ac.ke": {
+        "ip": "197.136.53.236",
+        "http": 404,
+        "https": "No Response"
+    },
+    "lfc.cuk.ac.ke": {
+        "ip": "197.136.53.60",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "opac.cuk.ac.ke": {
+        "ip": "197.136.53.154",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "repository.cuk.ac.ke": {
+        "ip": "197.136.53.38",
+        "http": 200,
+        "https": 200
+    },
+    "shahada1.cuk.ac.ke": {
+        "ip": "197.136.53.71",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "shahada2.cuk.ac.ke": {
+        "ip": "197.136.53.72",
+        "http": 200,
+        "https": 200
+    },
+    "space.cuk.ac.ke": {
+        "ip": "197.136.53.138",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "staffportal.cuk.ac.ke": {
+        "ip": "197.136.53.12",
+        "http": 200,
+        "https": 200
+    },
+    "studentportal.cuk.ac.ke": {
+        "ip": "197.136.53.22",
+        "http": 200,
+        "https": 200
+    },
+    "support.cuk.ac.ke": {
+        "ip": "197.136.53.94",
+        "http": 200,
+        "https": "No Response"
+    },
+    "survey.cuk.ac.ke": {
+        "ip": "197.136.53.53",
+        "http": "No Response",
+        "https": "No Response"
+    },
+    "ujumbe.cuk.ac.ke": {
+        "ip": "197.136.53.48",
+        "http": 200,
+        "https": 200
+    },
+    "www.cuk.ac.ke": {
+        "ip": "41.204.161.153",
+        "http": "No Response",
+        "https": "No Response"
+    }
+}
